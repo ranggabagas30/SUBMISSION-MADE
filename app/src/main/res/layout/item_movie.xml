@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/bg_rounded_purple"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_item_photo"
+        android:layout_width="140dp"
+        android:layout_height="210dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder"
+        android:background="@drawable/placeholder"
+        android:contentDescription="@string/image_poster_movie" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_item_photo"
+        android:layout_toRightOf="@id/iv_item_photo"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_item_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_item_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/iv_detail_poster"
+            android:fontFamily="@font/titillium_web_semi_bold"
+            android:padding="6dp"
+            android:shadowColor="#7F000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="3"
+            android:drawableStart="@drawable/ic_star_orange_24dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/dashed_bottom_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_item_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/titillium_web"
+            android:maxLines="4"
+            android:textColor="@color/colorPrimaryLightest"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</RelativeLayout>
