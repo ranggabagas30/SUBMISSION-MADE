@@ -3,6 +3,7 @@ package com.rangga.submission.ui;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.rangga.submission.R;
-import com.rangga.submission.model.Movie;
+import com.rangga.submission.data.database.entity.Movie;
 
 import java.util.Objects;
 
@@ -30,6 +31,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView tvMovieGenre = findViewById(R.id.tv_detail_genre);
         TextView tvMovieRelease = findViewById(R.id.tv_detail_release);
         TextView tvMovieDesc = findViewById(R.id.tv_detail_desc);
+        ImageButton ibFavorite = findViewById(R.id.ib_detail_favorite);
         ImageView imgMoviePoster = findViewById(R.id.iv_detail_poster);
 
         setSupportActionBar(toolbar);
@@ -46,6 +48,9 @@ public class DetailActivity extends AppCompatActivity {
         tvMovieGenre.setText(movie.getMovieGenre());
         tvMovieRelease.setText(movie.getMovieRelease());
         tvMovieDesc.setText(movie.getMovieDescription());
+        if (movie.isFavorite()) ibFavorite.setImageDrawable(getDrawable(R.drawable.ic_favorite_24dp));
+        else ibFavorite.setImageDrawable(getDrawable(R.drawable.ic_favorite_border_24dp));
+
         Glide.with(this)
                 .load(movie.getMovieImageUrl())
                 .apply(new RequestOptions())
@@ -55,7 +60,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setActionBarTitle(){
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Detail Movie");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.detail_screen_title));
     }
 
     @Override

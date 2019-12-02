@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Movie Catalogue</string>
+    <string name="detail_screen_title">Detail Movie</string>
     <string name="movie_release">Movie Release:</string>
     <string name="movie_rating">Movie Rate:</string>
     <string name="movie_poster">Movie Poster</string>
@@ -9,6 +10,11 @@
 
     <!-- error string -->
     <string name="error_get_data">Could not retrieve data</string>
+    <string name="error_empty_data">No items</string>
+    <string name="error_update_favorite">Failed update favorite</string>
+    <!-- success message -->
+    <string name="success_add_favorite">added to favorite successfully</string>
+    <string name="success_remove_favorite">removed from favorite successfully</string>
 
     <string-array name="data_movie_name">
         <item>A Star is Born</item>
@@ -282,5 +288,6 @@
 
     <string name="tab_text_1">MOVIES</string>
     <string name="tab_text_2">TV SHOWS</string>
+    <string name="tab_text_3">FAVORITE</string>
 
 </resources>

@@ -3,7 +3,7 @@ package com.rangga.submission.util;
 import com.rangga.submission.data.network.APIConfig;
 import com.rangga.submission.data.network.pojo.MovieResponse;
 import com.rangga.submission.data.network.pojo.TvResponse;
-import com.rangga.submission.model.Movie;
+import com.rangga.submission.data.database.entity.Movie;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +22,7 @@ public class CommonUtil {
         movie.setMovieRating(String.valueOf(movieResponse.getVoteAverage()));
         movie.setMovieRelease(convertDateFormat(movieResponse.getReleaseDate(), Constants.DATE_FORMAT1, Constants.DATE_FORMAT2));
         movie.setMovieImageUrl(imageUrl(Constants.IMAGESIZE_W342, movieResponse.getPosterPath()));
+        movie.setType(Movie.TYPE_MOVIE);
         return movie;
     }
 
@@ -32,6 +33,7 @@ public class CommonUtil {
         movie.setMovieRating(String.valueOf(tvResponse.getVoteAverage()));
         movie.setMovieRelease(convertDateFormat(tvResponse.getFirstAirDate(), Constants.DATE_FORMAT1, Constants.DATE_FORMAT2));
         movie.setMovieImageUrl(imageUrl(Constants.IMAGESIZE_W342, tvResponse.getPosterPath()));
+        movie.setType(Movie.TYPE_TV_SHOWS);
         return movie;
     }
 

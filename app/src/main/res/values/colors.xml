@@ -17,4 +17,11 @@
     <color name="colorSecondaryDark">#c66900</color>
     <color name="colorTextPrimary">#ffffff</color>
     <color name="colorTextSecondary">#000000</color>
+
+    <!-- bottom navigation -->
+    <color name="color_tab_movies">@color/colorPrimaryLightest</color>
+    <color name="color_tab_tv_shows">@color/colorPrimaryLightest</color>
+    <color name="color_tab_favorite">@color/colorPrimaryLightest</color>
+    <color name="color_inactive">@color/colorPrimaryLight</color>
+    <color name="color_accent">@color/colorAccent</color>
 </resources>

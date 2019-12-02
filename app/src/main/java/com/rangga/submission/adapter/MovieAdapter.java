@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,25 +14,41 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.rangga.submission.R;
-import com.rangga.submission.model.Movie;
+import com.rangga.submission.data.database.entity.Movie;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryViewHolder> {
 
-    private final Context context;
+    private Context context;
+    private boolean isOnFavorite = false;
     private OnItemClickListener onItemClickListener;
-    private ArrayList<Movie> movies;
+    private OnLongItemClickListener onLongItemClickListener;
+    private OnFavoriteClickListener onFavoriteClickListener;
+    private List<Movie> movies;
 
     public MovieAdapter(Context context) {
         this.context = context;
+    }
+
+    public MovieAdapter(Context context, boolean isOnFavorite) {
+        this.context = context;
+        this.isOnFavorite = isOnFavorite;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void setData(ArrayList<Movie> movies) {
+    public void setOnLongItemClickListener(OnLongItemClickListener onLongItemClickListener) {
+        this.onLongItemClickListener = onLongItemClickListener;
+    }
+
+    public void setOnFavoriteClickListener(OnFavoriteClickListener onFavoriteClickListener) {
+        this.onFavoriteClickListener = onFavoriteClickListener;
+    }
+
+    public void setData(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }
@@ -51,6 +68,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
         categoryViewHolder.txtMovieGenre.setText(movie.getMovieGenre());
         categoryViewHolder.txtMovieRating.setText(movie.getMovieRating());
 
+        if (isOnFavorite) {
+            categoryViewHolder.ibFavorite.setImageDrawable(context.getDrawable(R.drawable.ic_close_24dp));
+        } else {
+            if (movie.isFavorite()) categoryViewHolder.ibFavorite.setImageDrawable(context.getDrawable(R.drawable.ic_favorite_24dp));
+            else categoryViewHolder.ibFavorite.setImageDrawable(context.getDrawable(R.drawable.ic_favorite_border_24dp));
+        }
+
         Glide.with(context)
                 .load(movie.getMovieImageUrl())
                 .apply(new RequestOptions())
@@ -58,7 +82,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
 
         categoryViewHolder.itemView.setOnClickListener(v -> {
             Movie movieClick = movies.get(categoryViewHolder.getAdapterPosition());
-            onItemClickListener.onItemClick(movieClick);
+            if (onItemClickListener != null) onItemClickListener.onItemClick(movieClick);
+        });
+
+        categoryViewHolder.itemView.setOnLongClickListener(v -> {
+            Movie movieClick = movies.get(categoryViewHolder.getAdapterPosition());
+            if (onLongItemClickListener != null) onLongItemClickListener.onLongItemClickListener(movieClick);
+            return true;
+        });
+
+        categoryViewHolder.ibFavorite.setOnClickListener(v -> {
+            Movie movieClick = movies.get(categoryViewHolder.getAdapterPosition());
+            if (onFavoriteClickListener != null) onFavoriteClickListener.onFavoriteClickListener(movieClick);
         });
     }
 
@@ -73,6 +108,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
         final TextView txtMovieDescription;
         final TextView txtMovieGenre;
         final TextView txtMovieRating;
+        final ImageButton ibFavorite;
         final ImageView imgMoviePoster;
 
         CategoryViewHolder(@NonNull View itemView) {
@@ -81,11 +117,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.CategoryView
             txtMovieDescription = itemView.findViewById(R.id.tv_item_desc);
             txtMovieGenre = itemView.findViewById(R.id.tv_item_genre);
             txtMovieRating = itemView.findViewById(R.id.tv_item_rating);
+            ibFavorite = itemView.findViewById(R.id.ib_item_favorite);
             imgMoviePoster = itemView.findViewById(R.id.iv_item_photo);
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(Movie movie);
+    }
+
+    public interface OnLongItemClickListener {
+        void onLongItemClickListener(Movie movie);
+    }
+
+    public interface OnFavoriteClickListener {
+        void onFavoriteClickListener(Movie movie);
     }
 }

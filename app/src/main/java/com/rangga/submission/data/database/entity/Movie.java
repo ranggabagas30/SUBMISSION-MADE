@@ -1,17 +1,58 @@
-package com.rangga.submission.model;
+package com.rangga.submission.data.database.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Movie")
 public class Movie implements Parcelable {
+
+    public static final int TYPE_MOVIE = 0;
+    public static final int TYPE_TV_SHOWS = 1;
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "_id")
+    private int id;
+
+    @ColumnInfo
     private String movieName;
+
+    @ColumnInfo
     private String movieDescription;
+
+    @ColumnInfo
     private String movieRelease;
+
+    @ColumnInfo
     private String movieGenre;
+
+    @ColumnInfo
     private String movieRating;
+
+    @ColumnInfo
     private String movieImageUrl;
+
+    @ColumnInfo
+    private boolean isFavorite = false;
+
+    @ColumnInfo
+    private int type;
+
+    @ColumnInfo
     private int imgResource;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getMovieGenre() {
         return movieGenre;
@@ -61,6 +102,22 @@ public class Movie implements Parcelable {
         this.movieImageUrl = movieImageUrl;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public int getImgResource() {
         return imgResource;
     }
@@ -82,10 +139,25 @@ public class Movie implements Parcelable {
         dest.writeString(this.movieGenre);
         dest.writeString(this.movieImageUrl);
         dest.writeFloat(Float.parseFloat(String.valueOf(this.movieRating)));
+        dest.writeInt(this.isFavorite ? 1 : 0);
+        dest.writeInt(this.type);
         dest.writeInt(this.imgResource);
     }
 
     public Movie() {
+    }
+
+    public Movie(int id, String movieName, String movieDescription, String movieRelease, String movieGenre, String movieRating, String movieImageUrl, boolean isFavorite, int type, int imgResource) {
+        this.id = id;
+        this.movieName = movieName;
+        this.movieDescription = movieDescription;
+        this.movieRelease = movieRelease;
+        this.movieGenre = movieGenre;
+        this.movieRating = movieRating;
+        this.movieImageUrl = movieImageUrl;
+        this.isFavorite = isFavorite;
+        this.type = type;
+        this.imgResource = imgResource;
     }
 
     protected Movie(Parcel in) {
@@ -96,6 +168,8 @@ public class Movie implements Parcelable {
         this.movieGenre = in.readString();
         this.movieImageUrl = in.readString();
         this.movieRating = String.valueOf(in.readFloat());
+        this.isFavorite = in.readInt() == 1;
+        this.type = in.readInt();
         this.imgResource = in.readInt();
     }
 
